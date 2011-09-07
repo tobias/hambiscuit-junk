@@ -64,3 +64,7 @@ application:
   env: ${RACK_ENV}
 __EOF__
 touch ${OPENSHIFT_REPO_DIR}/deployments/app-knob.yml.dodeploy
+
+sleep 60
+
+cat /tmp/hambiscuit.log
