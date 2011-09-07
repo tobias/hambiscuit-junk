@@ -1,5 +1,5 @@
 jobs:
   foo.bar:
     job: AJob
-    cron: '*/5 * * * * ?'
+    cron: '1 * * * * ?'
     
