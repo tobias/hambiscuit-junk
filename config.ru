@@ -1,8 +1,23 @@
-<!doctype html>
-<html lang="en">
+require 'rack/lobster'
+
+map '/health' do
+  health = proc do |env|
+    [200, { "Content-Type" => "text/html" }, ["1"]]
+  end
+  run health
+end
+
+map '/lobster' do
+  run Rack::Lobster.new
+end
+
+map '/' do
+  welcome = proc do |env|
+    [200, { "Content-Type" => "text/html" }, ["<!doctype html>
+<html lang=\"en\">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset=\"utf-8\">
+  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">
   <title>Welcome to OpenShift</title>
   <style>
   html { background: black; }
@@ -80,8 +95,8 @@
 </head>
 <body>
   <img
-    alt="OpenShift logo"
-    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAABKCAYAAACVbQIxAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+    alt=\"OpenShift logo\"
+    src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAABKCAYAAACVbQIxAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAAWcQAAFnEBAJr2QQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAACAASURB
 VHic7Z15nBxVtce/p7pnsj4IZOkJyQwhPSQhQCQJSIILnbCjsigh74kooIAgKoqiggooCj71RXyK
 CrI8FQUSEAIYiEmmQYQgJGFLIMlUMllnKgEC2WZ6uuue90dVJT09PTO9BYip7+dTn5m6deucW9XV
@@ -262,20 +277,15 @@ U/GCxzy8we6lwSC8X3ue4J+3FK/10WVw8Wv3abyxgON8X/Py5LvHt/XrHq5xMtCciMeastJ6+2VO
 BmtHkrbTHy+Y9sUbxH8ux86heAPGq/EWR34MeCwRj3Vq6SVtZygwJhGPNeSk9wemJOKxR7LSRuBN
 W16LN5ZzKl4QD6YYj8FrAbyciMc6Vcry+O6PJxwj8MYzlgSTBZLeyvYTcvwLXqujHu9zS+axGQM+
 jrcq3gYOyVkvcjjwUWA53iD6KaGAhISEvC/xg+QaYFQiHivqXVAh7w7hLxKGhIS8XzkHeCoUj/cv
-/w+9BQu2G5s85QAAAABJRU5ErkJggg==">
+/w+9BQu2G5s85QAAAABJRU5ErkJggg==\">
   <h1>
-    Welcome to OpenShift, JBossAS7 Cartridge
+    Welcome to OpenShift
   </h1>
   <p>
     Place your application here
   </p>
   <p>
-    In order to commit to your new project, go to your projects git repo  (created with the rhc-create-app command) directory.
-  </p>
-  <p>
-    For example, if you named your application myfirstapp (by passing in -a myfirstapp to the rhc-create-app command),
-      you would find the contents of this app located under myfirstapp/src/main/webapp. You can edit that and push your
-      changes from the myfirstapp directory by running:
+    In order to commit to your new project, go to your projects git repo (created with the rhc-create-app command).  Make your changes, then run:
   </p>
   <pre>
     git commit -a -m 'Some commit message'
@@ -284,39 +294,16 @@ jrcq3gYOyVkvcjjwUWA53iD6KaGAhISEvC/xg+QaYFQiHivqXVAh7w7hLxKGhIS8XzkHeCoUj/cv
   <p>
     Then reload this page.
   </p>
-  <p>See the myfirstapp/README file for more information on the options for deploying applications.</p>
-
-
-<h1>Sample Applications</h1>
-<p>To get started you can either modify the default war or try one of these samples:
-  <ul>
-    <li><a href="https://github.com/openshift/seambooking-example">https://github.com/openshift/seambooking-example</a> a SEAM booking example</li>
-    <li><a href="https://github.com/openshift/tweetstream-example">https://github.com/openshift/tweetstream-example</a> a TweetStream example</li>
-    <li><a href="https://github.com/openshift/jbossas-quickstart">https://github.com/openshift/jbossas-quickstart</a> the JBossAS quickstart</li>
-  </ul>
   
-  <h4>Example usage:</h4>
-  <pre>
-  cd myfirstapp 
-  git remote add upstream -m master 
-  git://github.com/openshift/seambooking-example.git 
-  git pull -s recursive -X theirs upstream master
-  </pre>
-</p>
-
-<h2>Debugging</h2>
-<p>View debugging information about the server environment including memory pools by loading this JSP page: <a href="snoop.jsp">Debug</a></p>
-
-<hr>  
   <h2>
     What's next?
   </h2>
   <ul>
     <li>
-      Why not visit us at <a href="http://openshift.redhat.com">http://openshift.redhat.com</a>, or
+      Why not visit us at <a href=\"http://openshift.redhat.com\">http://openshift.redhat.com</a>, or
     </li>
     <li>
-      You could get help in the <a href="http://www.redhat.com/openshift">OpenShift forums</a>, or
+      You could get help in the <a href=\"http://www.redhat.com/openshift\">OpenShift forums</a>, or
     </li>
     <li>
       You're welcome to come chat with us in our IRC channel at #openshift on freenode.net
@@ -324,3 +311,7 @@ jrcq3gYOyVkvcjjwUWA53iD6KaGAhISEvC/xg+QaYFQiHivqXVAh7w7hLxKGhIS8XzkHeCoUj/cv
   </ul>
 </body>
 </html>
+"]]
+  end
+  run welcome
+end

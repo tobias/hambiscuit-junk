@@ -18,189 +18,214 @@
   ~ License along with this software; if not, write to the Free
   ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
   ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-  -->
-
-<server xmlns="urn:jboss:domain:1.0">
-
+  --> 
+<server xmlns='urn:jboss:domain:1.0'>
     <extensions>
-        <extension module="org.jboss.as.clustering.infinispan"/>
-        <extension module="org.jboss.as.connector"/>
-        <extension module="org.jboss.as.deployment-scanner"/>
-        <extension module="org.jboss.as.ee"/>
-        <extension module="org.jboss.as.ejb3"/>
-        <extension module="org.jboss.as.jaxrs"/>
-        <extension module="org.jboss.as.jmx"/>
-        <extension module="org.jboss.as.jpa"/>
-        <extension module="org.jboss.as.logging"/>
-        <extension module="org.jboss.as.naming"/>
-        <extension module="org.jboss.as.sar"/>
-        <extension module="org.jboss.as.security"/>
-        <extension module="org.jboss.as.threads"/>
-        <extension module="org.jboss.as.transactions"/>
-        <extension module="org.jboss.as.web" />
-        <extension module="org.jboss.as.weld" />
+        <extension module='org.jboss.as.clustering.infinispan'/>
+        <extension module='org.jboss.as.connector'/>
+        <extension module='org.jboss.as.deployment-scanner'/>
+        <extension module='org.jboss.as.ee'/>
+        <extension module='org.jboss.as.ejb3'/>
+        <extension module='org.jboss.as.jaxrs'/>
+        <extension module='org.jboss.as.jmx'/>
+        <extension module='org.jboss.as.jpa'/>
+        <extension module='org.jboss.as.logging'/>
+        <extension module='org.jboss.as.naming'/>
+        <extension module='org.jboss.as.sar'/>
+        <extension module='org.jboss.as.security'/>
+        <extension module='org.jboss.as.threads'/>
+        <extension module='org.jboss.as.transactions'/>
+        <extension module='org.jboss.as.web'/>
+        <extension module='org.jboss.as.weld'/>
+        <extension module='org.torquebox.bootstrap'/>
+        <extension module='org.torquebox.core'/>
+        <extension module='org.torquebox.cdi'/>
+        <extension module='org.torquebox.jobs'/>
+        <extension module='org.torquebox.security'/>
+        <extension module='org.torquebox.services'/>
+        <extension module='org.torquebox.web'/>
     </extensions>
-
     <profile>
-        <subsystem xmlns="urn:jboss:domain:logging:1.0">
-            <console-handler name="CONSOLE">
-                <level name="INFO"/>
+        <subsystem xmlns='urn:jboss:domain:logging:1.0'>
+            <console-handler name='CONSOLE'>
+                <level name='INFO'/>
                 <formatter>
-                    <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
+                    <pattern-formatter pattern='%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n'/>
                 </formatter>
             </console-handler>
-
-            <periodic-rotating-file-handler name="FILE">
-                <level name="INFO"/>
+            <periodic-rotating-file-handler name='FILE'>
+                <level name='INFO'/>
                 <formatter>
-                    <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n"/>
+                    <pattern-formatter pattern='%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n'/>
                 </formatter>
-                <file relative-to="jboss.server.log.dir" path="server.log"/>
-                <suffix value=".yyyy-MM-dd"/>
+                <file path='server.log' relative-to='jboss.server.log.dir'/>
+                <suffix value='.yyyy-MM-dd'/>
             </periodic-rotating-file-handler>
-
-            <logger category="com.arjuna">
-                <level name="WARN"/>
+            <logger category='com.arjuna'>
+                <level name='WARN'/>
             </logger>
-            <logger category="org.apache.tomcat.util.modeler">
-                <level name="WARN"/>
+            <logger category='org.apache.tomcat.util.modeler'>
+                <level name='WARN'/>
             </logger>
-            <logger category="sun.rmi">
-                <level name="WARN"/>
+            <logger category='sun.rmi'>
+                <level name='WARN'/>
             </logger>
-
             <root-logger>
-                <level name="INFO"/>
+                <level name='INFO'/>
                 <handlers>
-                    <handler name="CONSOLE"/>
-                    <handler name="FILE"/>
+                    <handler name='CONSOLE'/>
+                    <handler name='FILE'/>
                 </handlers>
             </root-logger>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:datasources:1.0">
+        <subsystem xmlns='urn:jboss:domain:datasources:1.0'>
             <datasources>
-                <datasource jndi-name="java:jboss/datasources/ExampleDS" enabled="true" use-java-context="true" pool-name="H2DS">
-                    <connection-url>jdbc:h2:${jboss.server.data.dir}/test;DB_CLOSE_DELAY=-1</connection-url>
-                    <driver>h2</driver>
-                    <pool></pool>
+                <datasource use-java-context='true' enabled='true' jndi-name='java:jboss/datasources/ExampleDS' pool-name='H2DS'>
+                    <connection-url>
+                        jdbc:h2:${jboss.server.data.dir}/test;DB_CLOSE_DELAY=-1
+                    </connection-url>
+                    <driver>
+                        h2
+                    </driver>
+                    <pool/>
                     <security>
-                        <user-name>sa</user-name>
-                        <password>sa</password>
+                        <user-name>
+                            sa
+                        </user-name>
+                        <password>
+                            sa
+                        </password>
                     </security>
-                    <validation></validation>
-                    <timeout></timeout>
-                    <statement></statement>
+                    <validation/>
+                    <timeout/>
+                    <statement/>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/MysqlDS" enabled="false" use-java-context="true" pool-name="MysqlDS">
-                    <connection-url>jdbc:mysql://127.1.27.1:3306/hambiscuit</connection-url>
-                    <driver>mysql</driver>
+                <datasource use-java-context='true' enabled='false' jndi-name='java:jboss/datasources/MysqlDS' pool-name='MysqlDS'>
+                    <connection-url>
+                        jdbc:mysql://127.1.27.1:3306/hambiscuit
+                    </connection-url>
+                    <driver>
+                        mysql
+                    </driver>
                     <security>
-                      <user-name>admin</user-name>
-                      <password>changeme</password>
+                        <user-name>
+                            admin
+                        </user-name>
+                        <password>
+                            changeme
+                        </password>
                     </security>
                 </datasource>
                 <drivers>
-                    <driver name="h2" module="com.h2database.h2">
-                        <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                    <driver name='h2' module='com.h2database.h2'>
+                        <xa-datasource-class>
+                            org.h2.jdbcx.JdbcDataSource
+                        </xa-datasource-class>
                     </driver>
-                    <driver name="mysql" module="com.mysql.jdbc">
-                        <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+                    <driver name='mysql' module='com.mysql.jdbc'>
+                        <xa-datasource-class>
+                            com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+                        </xa-datasource-class>
                     </driver>
                 </drivers>
             </datasources>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:deployment-scanner:1.0">
-            <deployment-scanner scan-interval="5000" relative-to="jboss.server.base.dir" path="deployments" />
+        <subsystem xmlns='urn:jboss:domain:deployment-scanner:1.0'>
+            <deployment-scanner scan-interval='5000' path='deployments' relative-to='jboss.server.base.dir'/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:ee:1.0" />
-        <subsystem xmlns="urn:jboss:domain:ejb3:1.0" />
-        <subsystem xmlns="urn:jboss:domain:infinispan:1.0" default-cache-container="hibernate">
-            <cache-container name="hibernate" default-cache="local-query">
-                <local-cache name="entity">
-                    <eviction strategy="LRU" max-entries="10000"/>
-                    <expiration max-idle="100000"/>
+        <subsystem xmlns='urn:jboss:domain:ee:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:ejb3:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:infinispan:1.0' default-cache-container='hibernate'>
+            <cache-container name='hibernate' default-cache='local-query'>
+                <local-cache name='entity'>
+                    <eviction max-entries='10000' strategy='LRU'/>
+                    <expiration max-idle='100000'/>
                 </local-cache>
-                <local-cache name="local-query">
-                    <eviction strategy="LRU" max-entries="10000"/>
-                    <expiration max-idle="100000"/>
+                <local-cache name='local-query'>
+                    <eviction max-entries='10000' strategy='LRU'/>
+                    <expiration max-idle='100000'/>
                 </local-cache>
-                <local-cache name="timestamps">
-                    <eviction strategy="NONE"/>
+                <local-cache name='timestamps'>
+                    <eviction strategy='NONE'/>
                 </local-cache>
             </cache-container>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:jaxrs:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:jca:1.0">
-            <archive-validation enabled="false" />
-            <bean-validation enabled="false" />
+        <subsystem xmlns='urn:jboss:domain:jaxrs:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:jca:1.0'>
+            <archive-validation enabled='false'/>
+            <bean-validation enabled='false'/>
             <default-workmanager>
-                <short-running-threads blocking="true">
-                        <core-threads count="5" per-cpu="10"/>
-                        <queue-length count="5" per-cpu="10"/>
-                        <max-threads count="5" per-cpu="10"/>
-                        <keepalive-time time="10" unit="seconds"/>
+                <short-running-threads blocking='true'>
+                    <core-threads per-cpu='10' count='5'/>
+                    <queue-length per-cpu='10' count='5'/>
+                    <max-threads per-cpu='10' count='5'/>
+                    <keepalive-time time='10' unit='seconds'/>
                 </short-running-threads>
-                <long-running-threads blocking="true">
-                        <core-threads count="5" per-cpu="10"/>
-                        <queue-length count="5" per-cpu="10"/>
-                        <max-threads count="5" per-cpu="10"/>
-                        <keepalive-time time="10" unit="seconds"/>
+                <long-running-threads blocking='true'>
+                    <core-threads per-cpu='10' count='5'/>
+                    <queue-length per-cpu='10' count='5'/>
+                    <max-threads per-cpu='10' count='5'/>
+                    <keepalive-time time='10' unit='seconds'/>
                 </long-running-threads>
             </default-workmanager>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:jpa:1.0">
-            <jpa default-datasource=""/>
+        <subsystem xmlns='urn:jboss:domain:jpa:1.0'>
+            <jpa default-datasource=''/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:naming:1.0" />
-        <subsystem xmlns="urn:jboss:domain:resource-adapters:1.0" />
-        <subsystem xmlns="urn:jboss:domain:sar:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:security:1.0">
+        <subsystem xmlns='urn:jboss:domain:naming:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:resource-adapters:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:sar:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:security:1.0'>
             <security-domains>
-                <security-domain name="other" cache-type="default">
+                <security-domain name='other' cache-type='default'>
                     <authentication>
-                        <login-module code="UsersRoles" flag="required"/>
+                        <login-module code='UsersRoles' flag='required'/>
                     </authentication>
                 </security-domain>
             </security-domains>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:threads:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:transactions:1.0">
-            <recovery-environment socket-binding="txn-recovery-environment" status-socket-binding="txn-status-manager"/>
+        <subsystem xmlns='urn:jboss:domain:threads:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:transactions:1.0'>
+            <recovery-environment socket-binding='txn-recovery-environment' status-socket-binding='txn-status-manager'/>
             <core-environment>
                 <process-id>
-                    <uuid />
+                    <uuid/>
                 </process-id>
             </core-environment>
-            <coordinator-environment default-timeout="300"/>
+            <coordinator-environment default-timeout='300'/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:web:1.0" default-virtual-server="default-host">
-            <connector name="http" scheme="http" protocol="HTTP/1.1" socket-binding="http"/>
-            <virtual-server name="default-host" enable-welcome-root="false">
-               <alias name="localhost" />
+        <subsystem xmlns='urn:jboss:domain:web:1.0' default-virtual-server='default-host'>
+            <connector name='http' socket-binding='http' protocol='HTTP/1.1' scheme='http'/>
+            <virtual-server name='default-host' enable-welcome-root='false'>
+                <alias name='localhost'/>
             </virtual-server>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:weld:1.0" />
+        <subsystem xmlns='urn:jboss:domain:weld:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-bootstrap:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-core:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-cdi:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-jobs:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-security:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-services:1.0'/>
+        <subsystem xmlns='urn:jboss:domain:torquebox-web:1.0'/>
     </profile>
-
     <interfaces>
-        <interface name="management">
-            <loopback-address value="127.1.27.1"/>
+        <interface name='management'>
+            <loopback-address value='127.1.27.1'/>
         </interface>
-        <interface name="public">
-            <loopback-address value="127.1.27.1"/>
+        <interface name='public'>
+            <loopback-address value='127.1.27.1'/>
         </interface>
     </interfaces>
-
-    <socket-binding-group name="standard-sockets" default-interface="public">
-        <socket-binding name="http" port="8080"/>
-        <socket-binding name="https" port="8443"/>
-        <socket-binding name="jmx-connector-registry" port="1090"/>
-        <socket-binding name="jmx-connector-server" port="1091"/>
-        <socket-binding name="jndi" port="1099"/>
-        <socket-binding name="osgi-http" port="8090"/>
-        <socket-binding name="remoting" port="4447"/>
-        <socket-binding name="txn-recovery-environment" port="4712"/>
-        <socket-binding name="txn-status-manager" port="4713"/>
+    <socket-binding-group name='standard-sockets' default-interface='public'>
+        <socket-binding name='http' port='8080'/>
+        <socket-binding name='https' port='8443'/>
+        <socket-binding name='jmx-connector-registry' port='1090'/>
+        <socket-binding name='jmx-connector-server' port='1091'/>
+        <socket-binding name='jndi' port='1099'/>
+        <socket-binding name='osgi-http' port='8090'/>
+        <socket-binding name='remoting' port='4447'/>
+        <socket-binding name='txn-recovery-environment' port='4712'/>
+        <socket-binding name='txn-status-manager' port='4713'/>
     </socket-binding-group>
-
 </server>
